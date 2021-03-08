@@ -1,0 +1,7 @@
+numpy
+pytube
+opencv-python
+tables
+tensorflow>=2.0.0
+flask
+gevent
