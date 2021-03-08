@@ -62,6 +62,6 @@ def predict_test():
         z = np.random.uniform(-1,1,(L.shape[0], Z_DIM))
         generated_ab = generator([L,z], training=False)
         lab_data = np.concatenate(((L[0]+1)*127.5, (generated_ab[0]+1)*127.5), axis=2).astype('uint8')
-        img = cv2.cvtColor(lab_data, cv2.COLOR_LAB2RGB)
+        img = cv2.cvtColor(lab_data, cv2.COLOR_LAB2BGR)
         out.write(img)
     out.release()
