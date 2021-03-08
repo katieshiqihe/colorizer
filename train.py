@@ -117,13 +117,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--from_pickle', dest='from_pickle', 
                         help='Load model from picke', action='store_true')
+    parser.add_argument('--epoch', dest='epoch', help='Number of epochs', 
+                        default=None, required=False, type=int)
     args = parser.parse_args()
     
     if args.from_pickle:
         with open('data/model.pickle', 'rb') as file:
             w = pickle.load(file)
         generator.set_weights(w['generator'])
-        discriminator.set_weights(w['discriminator'])   
-        EPOCHS = EPOCHS-w['epochs']
+        discriminator.set_weights(w['discriminator'])
         
-    train(EPOCHS)
+    if args.epoch is None:
+        epochs = EPOCHS
+    else:
+        epochs = args.epoch
+        
+    train(epochs)
