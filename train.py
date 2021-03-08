@@ -9,7 +9,6 @@ import model
 import datautils
 import tensorflow as tf
 import numpy as np
-import pickle
 import argparse
 import logging
 from datetime import datetime
@@ -104,28 +103,20 @@ def train(epochs):
 
         if (epoch + 1) % 10 == 0:
             # Save model 
-            w = dict()
-            w['generator'] = generator.get_weights()
-            w['discriminator'] = discriminator.get_weights()
-            w['epochs'] = epoch
-            with open('data/model.pickle', 'wb') as file:
-                pickle.dump(w, file)
-     
-  
+            generator.save_weights('data/generator/weights')
+            discriminator.save_weights('data/discriminator/weights')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--from_pickle', dest='from_pickle', 
-                        help='Load model from picke', action='store_true')
+    parser.add_argument('--load_weights', dest='load_weights', 
+                        help='Load model weights', action='store_true')
     parser.add_argument('--epoch', dest='epoch', help='Number of epochs', 
                         default=None, required=False, type=int)
     args = parser.parse_args()
     
-    if args.from_pickle:
-        with open('data/model.pickle', 'rb') as file:
-            w = pickle.load(file)
-        generator.set_weights(w['generator'])
-        discriminator.set_weights(w['discriminator'])
+    if args.load_weights:
+        generator.load_weights('data/generator/weights')
+        discriminator.load_weights('data/discriminator/weights')
         
     if args.epoch is None:
         epochs = EPOCHS

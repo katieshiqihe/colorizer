@@ -6,7 +6,6 @@ Created on Thu Mar  4 20:48:21 2021
 @author: khe
 """
 import numpy as np
-import pickle
 import matplotlib.pyplot as plt
 import cv2
 import model
@@ -18,10 +17,8 @@ generator = model.make_generator_model(IMG_HEIGHT, IMG_WIDTH, Z_DIM)
 discriminator = model.make_discriminator_model(IMG_HEIGHT, IMG_WIDTH)
 
 # Load weigths
-with open('data/model.pickle', 'rb') as file:
-    data = pickle.load(file)
-generator.set_weights(data['generator'])
-discriminator.set_weights(data['discriminator'])
+generator.load_weights('data/generator/weights')
+discriminator.load_weights('data/discriminator/weights')
 
 def predict_train(idx):
     '''
