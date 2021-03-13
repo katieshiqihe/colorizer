@@ -28,12 +28,16 @@ Perhaps because most screenshots have human faces in them, the network is pretty
 
 ### Sample Video
 This is a short clip from the original (black and white) *Twilight Zone*.
-![tz_bw](data/test_bw.mp4)
+
+<a href="https://youtu.be/05HJvR4cuwM"><img src="https://i.ytimg.com/vi/05HJvR4cuwM/hqdefault.jpg" width="240"></a>
+
 And here is the network output.
-![tz_color](data/test_color.mp4)
+
+<a href="https://youtu.be/rqL_XY6TXzQ"><img src="https://i.ytimg.com/vi/rqL_XY6TXzQ/hqdefault.jpg" width="240"></a>
 
 ### Sample Images
 A gallery of images from the training set.
+
 ![img_0](data/train_result_0.jpg)
 ![img_1](data/train_result_1.jpg)
 ![img_2](data/train_result_2.jpg)
