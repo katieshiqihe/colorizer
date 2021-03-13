@@ -97,10 +97,19 @@ def capture_youtube(url, filename, skip_open=0, skip_end=0, interval=None, mode=
                     image = image[:,80:-80,:]
                 # Default color scheme in openCV is BGR, covert to RGB
                 if mode == 'RGB':
+                    # Skip frame if it's black screen
+                    if np.nanmax(image) < 5:
+                        continue
                     image = image[:,:,::-1]
                 elif mode == 'LAB':
                     image = cv2.cvtColor(image, cv2.COLOR_BGR2Lab)
+                    # Skip frame if it's black screen
+                    if np.nanmax(image[:,:,0]) < 5:
+                        continue
                 else: 
+                    # Skip frame if it's black screen
+                    if np.nanmax(image[:,:,0]) < 5:
+                        continue                    
                     image = image[:,:,:1]
                 data = np.concatenate((data, np.expand_dims(image, axis=0)))
             
