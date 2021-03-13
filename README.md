@@ -28,17 +28,17 @@ Perhaps because most screenshots have human faces in them, the network is pretty
 
 ### Sample Video
 This is a short clip from the original (black and white) *Twilight Zone*.
-![tz_bw]("data/test_bw.mp4")
+![tz_bw](data/test_bw.mp4)
 And here is the network output.
-![tz_color]("data/test_color.mp4")
+![tz_color](data/test_color.mp4)
 
 ### Sample Images
 A gallery of images from the training set.
-![img_0]("data/train_result_0.jpg")
-![img_1]("data/train_result_1.jpg")
-![img_2]("data/train_result_2.jpg")
-![img_3]("data/train_result_3.jpg")
-![img_4]("data/train_result_4.jpg")
+![img_0](data/train_result_0.jpg)
+![img_1](data/train_result_1.jpg)
+![img_2](data/train_result_2.jpg)
+![img_3](data/train_result_3.jpg)
+![img_4](data/train_result_4.jpg)
 
 ## Technical Notes
 The model is written in Python using TensorFlow. The network was trained on a single NVIDIA P5000 GPU over 500 epochs, with each epoch taking about 5 minutes.
