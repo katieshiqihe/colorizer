@@ -1,6 +1,18 @@
 # Colorizer
 Image colorization with GAN
 
+## Table of Contents
+- [Motivation](#motivation)
+- [Related Work](#related-work)
+- [Data](#data)
+- [Architecture](#architecture)
+- [Results](#results)
+  - [Sample Video](#sample-video)
+  - [Sample Images](#sample-images)
+- [Technical Notes](#technical-notes)
+- [Further Work](#further-work)
+- [Caveat](#caveat)
+
 ## Motivation
 Image and video colorization by hand is a very labour-intensive process. In recent years with the advances in machine learning techniques, automatic colorization has gain significant traction in the field. In this project, I attempt to bring color to a clip from the original *Twilight Zone* using the GAN (generative adversarial network) architecture. This repository consists of scripts that gather and process data, build and train the network as well as a subset of training data, trained model weights, and sample outputs.
 
