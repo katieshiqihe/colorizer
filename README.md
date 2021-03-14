@@ -70,5 +70,5 @@ for generating the MP4 file from test data (see this
 [Github issue](https://github.com/opencv/opencv-python/issues/207)). I had
 installed OpenCV through APT instead on Ubuntu.
 ```shell
-sudo apt-get install opencv-python
+sudo apt-get install python3-opencv
 ```
