@@ -12,9 +12,13 @@ import numpy as np
 import argparse
 import logging
 from datetime import datetime
+import os
+
+# Set up logs
+os.makedirs('logs', exist_ok=True)
 today = datetime.utcnow()
 logging.basicConfig(format='%(asctime)s %(message)s',
-                    filename='%s.log'%(today.isoformat()[:10].replace('-', '_')),
+                    filename='logs/%s.log'%(today.isoformat()[:10].replace('-', '_')),
                     level=logging.INFO)
 
 # Model hyperparams and constants
