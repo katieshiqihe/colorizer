@@ -64,7 +64,7 @@ def capture_youtube(url, filename, skip_open=0, skip_end=0, interval=None, mode=
         if stream.mime_type == 'video/mp4':
             if stream.resolution == '360p':
                 if not os.path.isfile(filename+'.mp4'):
-                    stream.download(filename=filename)
+                    stream.download(filename=filename, output_path='data')
                 break
             
     # Extract frames from video
@@ -148,7 +148,7 @@ def build_database():
         ]
     
     for i in range(len(video_urls)):
-        filename = 'data/video_%s'%i
+        filename = 'video_%s'%i
         data = capture_youtube(video_urls[i], filename, 75, 60)
         L = data[:,:,:,0].flatten()
         A = data[:,:,:,1].flatten()
