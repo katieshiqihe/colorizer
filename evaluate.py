@@ -8,6 +8,7 @@ Created on Thu Mar  4 20:48:21 2021
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import argparse
 import model
 import datautils
 from train import IMG_HEIGHT, IMG_WIDTH, Z_DIM
@@ -69,3 +70,23 @@ def predict_test():
         img = cv2.cvtColor(lab_data, cv2.COLOR_LAB2BGR)
         out.write(img)
     out.release()
+    
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--train', dest='train', default=None, required=False,
+                        type=int, nargs='+', help='Predict on training set, please specify image index')
+    parser.add_argument('--test', dest='test', action='store_true',
+                        help='Predict on test set')
+    args = parser.parse_args()
+    
+    if args.train:
+        if type(args.train) == int:
+            fig, generated_ab = predict_train(args.train)
+            fig.savefig('data/train_result_%d.jpg'%args.train)
+        else:
+            for idx in args.train:
+                fig, generated_ab = predict_train(idx)
+                fig.savefig('data/train_result_%d.jpg'%idx)
+    
+    if args.test:
+        predict_test()
