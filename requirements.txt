@@ -1,5 +1,4 @@
-numpy
-pytube
-opencv-python
-tables
-tensorflow>=2.0.0
+tensorflow==2.4.1
+pytube==10.4.1
+opencv-python==4.5.1.48
+tables==3.6.1
