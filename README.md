@@ -27,7 +27,7 @@ Image and video colorization by hand is a very labour-intensive process. In rece
 ## Data
 The training set consists of 15,000 images from a 70s color TV show called *Ghost Story* and the test images are from the *Twilight Zone*. I used [pytube](https://github.com/pytube/pytube) to download YouTube videos and [OpenCV](https://opencv.org/) to capture images from videos, transform them from `RGB` to `LAB` colorspace, and resize the images for sake of training efficiency. The advantage of using `LAB` colorspace is that the lightness `L` layer is the grayscale version of the image, separated from the color channels.
 
-All images are stored in a single HDF5 file as arrays of unsigned integer type. When loaded, they are cast as floats and re-scaled to be between 0 and 1 before being passed into the network.
+All images are stored in a single HDF5 file as arrays of unsigned integer type in two tables (`Train` and `Test`). Due to size limitation, only a subset (200 images from the trianing set, 50 from test set) is provided in the repo. When loaded, they are cast as floats and re-scaled to be between 0 and 1 before being passed into the network.
 
 ## Architecture
  GAN is a popular model for image (or synthetic data, more generally) generation. The core idea is that a generative and a discriminative network will be trained simultaneously where the generative network attempts to create data similar to the real data so that the discriminative network cannot distinguish while the discriminative network learns to separate fake from real data.
