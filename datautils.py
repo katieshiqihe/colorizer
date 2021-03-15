@@ -174,39 +174,6 @@ def build_database():
 ###############################################################################
 # Image Loading and Preprocessing
 ###############################################################################
-    
-def trim_images(image, height, width):
-    '''
-    Trim images to specified height and width from the center.
-
-    Parameters
-    ----------
-    image : numpy array
-        An array of images, expecting 4 dimensions in the format of `NHWC`.
-    height : int
-        Output image height.
-    width : int
-        Output image width.
-
-    Returns
-    -------
-    out : numpy array
-        An array of output images.
-
-    '''
-    image_height = image.shape[1]
-    image_width = image.shape[2]
-    
-    out = image.copy()
-    if image_height > height:
-        top = (image_height-height)//2
-        bottom = image_height-height-top
-        out = out[:,top:-bottom, :, :]
-    if image_width > width:
-        left = (image_width-width)//2
-        right = image_width-width-left
-        out = out[:, :, left:-right, :]
-    return out
 
 def load_training_data(filename, start_idx=None, end_idx=None, img_height=360, img_width=480):
     '''
@@ -221,9 +188,9 @@ def load_training_data(filename, start_idx=None, end_idx=None, img_height=360, i
     end_idx : int, optional
         Ending image index, default is None (load all images).
     img_height : int, optional
-        Output image height, default is None (no trimming in height).
+        Output image height, default is 360 (no trimming in height).
     img_width : int, optional
-        Output image width, default is None (no trimming in width).
+        Output image width, default is 480 (no trimming in width).
 
     Returns
     -------
@@ -257,7 +224,7 @@ def load_training_data(filename, start_idx=None, end_idx=None, img_height=360, i
     data = np.array([cv2.resize(x, (img_width, img_height)) for x in data])
     return data
 
-def load_test_data(filename, start_idx=None, end_idx=None, img_height=None, img_width=None):
+def load_test_data(filename, start_idx=None, end_idx=None, img_height=360, img_width=480):
     '''
     Get a set of test images from HDF5.
 
@@ -270,9 +237,9 @@ def load_test_data(filename, start_idx=None, end_idx=None, img_height=None, img_
     end_idx : int, optional
         Ending image index, default is None (load all images).
     img_height : int, optional
-        Output image height, default is None (no trimming in height).
+        Output image height, default is 360 (no trimming in height).
     img_width : int, optional
-        Output image width, default is None (no trimming in width).
+        Output image width, default is 480 (no trimming in width).
 
     Returns
     -------
