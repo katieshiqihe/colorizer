@@ -112,11 +112,16 @@ def train(epochs):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('--build_db', dest='build_db', 
+                        help='Build database', action='store_true')
     parser.add_argument('--load_weights', dest='load_weights', 
                         help='Load model weights', action='store_true')
     parser.add_argument('--epoch', dest='epoch', help='Number of epochs', 
                         default=None, required=False, type=int)
     args = parser.parse_args()
+    
+    if args.build_db:
+        datautils.build_database()
     
     if args.load_weights:
         generator.load_weights('data/generator/weights')
