@@ -9,8 +9,11 @@ Image colorization with GAN
 - [Results](#results)
   - [Sample Video](#sample-video)
   - [Sample Images](#sample-images)
-- [Technical Notes](#technical-notes)
 - [Further Work](#further-work)
+- [Usage](#usage)
+    - [Train](#train)
+    - [Evaluate](#evaluate)
+- [Technical Notes](#technical-notes)
 - [Caveat](#caveat)
 
 ## Motivation
@@ -56,13 +59,41 @@ A gallery of images from the training set.
 ![img_3](data/train_result_3.jpg)
 ![img_4](data/train_result_4.jpg)
 
-## Technical Notes
-The model is written in Python using TensorFlow. The network was trained on a single NVIDIA P5000 GPU over 500 epochs, with each epoch taking about 5 minutes.
-
 ## Further Work
 A more diverse training dataset might help with more general object colorization. A generator that leverages a pre-trained image recognition and segmentation model can reduce training time and potentially improve performance. However, the pre-trained models are expecting the input to have three channels (since they were trained on color images) so some adjustments are needed. In addition, a different loss function that compares output in a reduced dimensionality space in the generator might alleviate the constant brown color prediction issue. One such example would be a VGG loss.  
 
 Currently, the model expects the input image to be 120 by 90 pixels. This is entirely arbitrary and only restricted by the first layer of the generator which projects the noise vector onto input image. A more dynamic approach can be used to remove the image size restriction.  
+
+## Usage
+A Dockerfile is included in this repo if you wish to run the model end-to-end in a container (CPU only).
+
+### Train
+The command below builds the full database and train the network from scratch.
+```shell
+python train.py --build_db
+```
+You can omit the `--build_db` flag if you've already built the database. Use the `--load_weights` flag if you wish to use the pre-trained weights and `--epoch [some number]` if you wish to overwrite the default number of epochs (100).
+
+### Evaluate
+To evaluate the trained network on a single image (say, image #8) from the training set:
+```shell
+python evaluate.py --train 8
+```
+
+To evaluate on multiple images from the training set:
+```shell
+python evaluate.py --train 0 99 175
+```
+
+To evaluate on the test video (note that codec is missing from the OpenCV Python library, see [Caveat](#caveat)):
+```shell
+python evaluate.py --test
+```
+
+The output images and video will be stored in the `data` directory.
+
+## Technical Notes
+The model is written in Python using TensorFlow. The network was trained on a single NVIDIA P5000 GPU over 500 epochs, with each epoch taking about 5 minutes.
 
 ## Caveat
 If you install OpenCV through pip, it doesn't come with the necessary encoding
