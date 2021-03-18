@@ -13,7 +13,9 @@ Image colorization with GAN
 - [Usage](#usage)
     - [Train](#train)
     - [Evaluate](#evaluate)
-- [Technical Notes](#technical-notes)
+- [Benchmarks](#benchmarks)
+  - [DeOldify](#deoldify)
+  - [Computation Time](#computation-time)
 - [Caveat](#caveat)
 
 ## Motivation
@@ -92,8 +94,24 @@ python evaluate.py --test
 
 The output images and video will be stored in the `data` directory.
 
-## Technical Notes
-The model is written in Python using TensorFlow. The network was trained on a single NVIDIA P5000 GPU over 500 epochs, with each epoch taking about 5 minutes.
+## Benchmarks
+
+### DeOldify
+[DeOldify](https://deoldify.ai/) is a state of the art deep learning model developed by Jason Antic for image colorization. See below for predicted images from the test set from the model and DeOldify API.
+
+![bm_0](data/benchmark_result_0.jpg)
+![bm_1](data/benchmark_result_1.jpg)
+
+### Computation Time
+The model is written in Python using TensorFlow. The network was trained on a single NVIDIA P5000 GPU over 500 epochs, with each epoch taking about 5 minutes. Training on a GPU provides significant speed up (20 times or more) as you can see from the plot below.
+
+![computation](data/computation_time.jpg)
+
+The CPU and GPU results above are from the same machine, with GPU disabled and enabled, respectively.
+
+Hardware specs:
+- CPU: Intel(R) Xeon(R) CPU E5-2623 v4 @ 2.60GHz, 4 cores (8 threads), 30GB RAM
+- GPU: NVIDIA Quadro P5000, 16GB RAM
 
 ## Caveat
 If you install OpenCV through pip, it doesn't come with the necessary encoding
