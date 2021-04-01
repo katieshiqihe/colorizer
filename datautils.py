@@ -63,7 +63,7 @@ def capture_youtube(url, filename, skip_open=0, skip_end=0, interval=None, mode=
         # Get the 360p video stream
         if stream.mime_type == 'video/mp4':
             if stream.resolution == '360p':
-                if not os.path.isfile(filename+'.mp4'):
+                if not os.path.isfile('data'+filename+'.mp4'):
                     stream.download(filename=filename, output_path='data')
                 break
             
