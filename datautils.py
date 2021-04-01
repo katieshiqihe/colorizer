@@ -68,7 +68,7 @@ def capture_youtube(url, filename, skip_open=0, skip_end=0, interval=None, mode=
                 break
             
     # Extract frames from video
-    vid_cap = cv2.VideoCapture(filename+'.mp4')
+    vid_cap = cv2.VideoCapture('data'+filename+'.mp4')
     fps = vid_cap.get(cv2.CAP_PROP_FPS)
     total_frames = vid_cap.get(cv2.CAP_PROP_FRAME_COUNT)
     if interval is None:
