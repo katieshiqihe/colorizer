@@ -29,14 +29,14 @@ Image and video colorization by hand is a very labour-intensive process. In rece
 ## Data
 The training set consists of 15,000 images from a 70s color TV show called *Ghost Story* and the test images are from the *Twilight Zone*. I used [pytube](https://github.com/pytube/pytube) to download YouTube videos and [OpenCV](https://opencv.org/) to capture images from videos, transform them from `RGB` to `LAB` colorspace, and resize the images for sake of training efficiency. The advantage of using `LAB` colorspace is that the lightness `L` layer is the grayscale version of the image, separated from the color channels.
 
-All images are stored in a single HDF5 file as arrays of unsigned integer type in two tables (`Train` and `Test`). Due to size limitation, only a subset (200 images from the trianing set, 50 from test set) is provided in the repo. When loaded, they are cast as floats and re-scaled to be between 0 and 1 before being passed into the network.
+All images are stored in a single HDF5 file as arrays of unsigned integer type in two tables (`Train` and `Test`). Due to size limitation, only a subset (200 images from the trianing set, 50 from test set) is provided in the repo. When loaded, they are cast as floats and re-scaled to be between -1 and 1 before being passed into the network.
 
 ## Architecture
- GAN is a popular model for image (or synthetic data, more generally) generation. The core idea is that a generative and a discriminative network will be trained simultaneously where the generative network attempts to create data similar to the real data so that the discriminative network cannot distinguish while the discriminative network learns to separate fake from real data.
+GAN is a popular model for image (or synthetic data, more generally) generation. The core idea is that a generative and a discriminative network will be trained simultaneously where the generative network attempts to create data similar to the real data so that the discriminative network cannot distinguish while the discriminative network learns to separate fake from real data.
 
-Since the goal is to generate believable colors for grayscale images, GAN seems to be a suitable choice for this task. The main architecture is inspired by [Unsupervised Diverse Colorization via Generative Adversarial Networks](https://arxiv.org/pdf/1702.06674.pdf) ([code](https://github.com/ccyyatnet/COLORGAN)) with slight modifications. Both the generator and the discriminator use convolutional layers with strides of 1 to avoid resizing and to retain spatial information. I have tried other models the use strides greater than 1 or pooling layers, and artifacts such as color blocks and abrupt transition become apparent in the results.
+Since the goal is to generate believable colors for grayscale images, GAN seems to be a suitable choice for this task. The main architecture is inspired by [Unsupervised Diverse Colorization via Generative Adversarial Networks](https://arxiv.org/pdf/1702.06674.pdf) ([code](https://github.com/ccyyatnet/COLORGAN)) with slight modifications. Here, the generator tries to produce colors as close to the ground truth as possible while the discriminator distinguishes the generator outputs from the real color version of the inputs. 
 
-The generator continuously concatenates the lightness channel before each convolution operation since the image size is invariant through the layers. This is a convenient way to allow the network to leverage conditional information throughout. I also use a larger learning rate for the generator optimizer than the discriminator optimizer since the discriminator is getting too good too quickly when the learning rates are equal.
+Both the generator and the discriminator use convolutional layers with strides of 1 to avoid resizing and to retain spatial information. I have tried other models the use strides greater than 1 or pooling layers, and artifacts such as color blocks and abrupt transition become apparent in the results. The generator continuously concatenates the lightness channel before each convolution operation since the image size is invariant through the layers. This is a convenient way to allow the network to leverage conditional information throughout. I also use a larger learning rate for the generator optimizer than the discriminator optimizer since the discriminator is getting too good too quickly when the learning rates are equal.
 
 Instead of Wasserstein loss, I opt for mean squared error in the generator and binary cross entropy in the discriminator. Wasserstein loss causes the training to be extremely unstable and the authors of the original paper also noted that Wasserstein did not improve the performance for them.
 
@@ -44,7 +44,7 @@ Instead of Wasserstein loss, I opt for mean squared error in the generator and b
 Perhaps because most screenshots have human faces in them, the network is pretty good at detecting and coloring faces. However, for objects that don't have any distinct color, the network often opts for the safe brownish color to minimize errors.
 
 ### Sample Video
-This is a short clip from the original (black and white) *Twilight Zone*.
+This is a short clip from the original (black and white) *Twilight Zone*. Click to play on YouTube.
 
 <a href="https://youtu.be/05HJvR4cuwM"><img src="https://i.ytimg.com/vi/05HJvR4cuwM/hqdefault.jpg" width="240"></a>
 
